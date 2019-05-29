@@ -1,8 +1,8 @@
 ---
 title: "Sydney Coding Club - Building R Package"
-subtitle: "https://kevinwang09.github.io/tutor_demo/"
-author: '[Kevin Y. X. Wang](https://kevinwang09.github.io/)'
-date: "`r paste0('Initiated on 2019 Feb 17, compiled on ', format(Sys.time(), '%Y %b %d'))`"
+subtitle: "https://kevinwang09.github.io/pkg_talk/"
+author: "[Kevin Wang](https://twitter.com/KevinWang009)"
+date: "2019 May 29"
 output:
   xaringan::moon_reader:
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
@@ -25,10 +25,8 @@ knitr::knit_hooks$set(error = function(x, options) {
 })
 library(tidyverse)
 ```
-
 class: segue
-
-## Acknowledgement
+# Acknowledgement
 
 Credits go to Garth, Dario and Mark for their advice. 
 
@@ -42,25 +40,23 @@ I do not believe in coding via talking, you have to struggle on your own to find
 + StackExchange
 + `tidyverse` packages on GitHub
 + GitHub issues pages
-+ Bioconductor style guide
++ Bioconductor style guide 
 + ~~Garth~~ 
+
+
 
 ---
 
 ## Building a package is more than just coding
 
-+ Writing functions takes 1 hour. Writing a package takes 1 day. Writing a well-designed package takes 1 month. 
++ Designs, organisations, dependencies, testing, documentations and debugging. 
 
-+ Designs, organisations, dependencies, testing and debugging. 
-
-+ Some packages that I worked on:
++ Getting a package to install only takes 1 commit. But polishing the package takes much longer:
   
-    - SmokyScotch: 55 commits
-    - mcvis: 47 commits, 2 branches, 2 remotes
-    - APES: 72 commits, 2 branches
-    - scMerge: 152 commits, 4 branches, 2 remotes
-
-+ Almost all of these packages broke in a major way a few times. That could be because of you or someone else entirely. 
+    - `SmokyScotch`: 55 commits, 1 branch
+    - `mcvis`: 47 commits, 2 branches
+    - `APES`: 72 commits, 2 branches
+    - `scMerge`: 152 commits, 4 branches
 
 ---
 
@@ -78,38 +74,32 @@ Loosely speaking, a `R` package is simply a folder with a bunch of scripts*.
   1. A Bioconductor package
     - `BiocCheck::BiocCheck()`
 
-  
-.footnote[*This is great if you want to cheat-install a package that you are not meant to.]
-
 ---
 
 ## Manage your package files `devtools` and `roxygen2`
+
+On my laptop:
 
 ```{r}
 .libPaths() %>% list.files() %>% head()
 .libPaths() %>% paste0("/dplyr") %>% list.files()
 ```
 
-+ `devtools` and `roxygen2` are packages that manage these files and folders for you.
-    - `roxygen2`: managing the namespaces and documents
-    - `devtools`: building, checking and installing the package
-    
++ `roxygen2`: managing the folders, namespaces and documentations.
++ `devtools`: building, checking and installing the package.
 ---
 
 ## Making a CRAN package
 
-+ `devtools::build()` a package is cheap, `devtools::check()` a package is a much higher standard. 
-
-
-.pull-left[
++ `devtools::build()` easy, `devtools::check()` is much harder. 
 + Everyone must pass this check before being put on CRAN
 
+.pull-left[
 .content-box-red[Error: the worst of all.]
 
 .content-box-yellow[Warning: less severe, but also prevents pass.] 
 
-.content-box-green[Note: You should check these, but no worries]
-
+.content-box-green[Note: You should check these.]
 ]
 
 
@@ -120,9 +110,6 @@ Loosely speaking, a `R` package is simply a folder with a bunch of scripts*.
 </center>
 
 ]
-
-
-+ Hadley (and thus, I) recommends `devtools::check()` instead of `R CMD Check`.
 ---
 
 class: segue
@@ -132,13 +119,11 @@ class: segue
 ---
 ## Making a Bioconductor package
 
-+ Bioconductor has a greater focus on documentations, examples and vignettes, reproducibility and coding styles
++ Compare to CRAN, Bioconductor has a greater focus on documentations, examples and vignettes, reproducibility and coding styles.
 
-+ Bioconductor uses GitHub + their own version of git + docker + virtual machine checker + human reviewer
++ GitHub + Bioc git + virtual machine checker + human reviewer + docker.
 
 + Development must be done with respect to the **development branch** of Bioconductor AND the **unreleased development version** of `R`
-
-+ Bioconductor has a much higher standard of accepting a package than CRAN
 
 + `BiocCheck::BiocCheck()` checks for
 
@@ -180,25 +165,28 @@ class: segue
 
 + Travis build is triggered by commits.
 
-+ Configuring basic Travis is easy:
++ Travis is publically accountable? https://travis-ci.org/tidyverse/readr.
 
-<center>
-<img src="figures/travis_genDA.png", width="40%">
-</center>
-
-
-+ But configuring it for more complicate projects with multiple environment variables and flags is a bit harder: https://github.com/tidyverse/dplyr/blob/master/.travis.yml. 
++ But configuring it for more complex projects with multiple environment variables and flags can be time consuming. https://travis-ci.org/SydneyBioX/scMerge/builds.
 
 ---
 
-## Should you use Travis?
+## Pros and cons of Travis
 
-My recommendation: use Travis to ensure robustness on other machines. But just be careful if you have a complex set-up, then be prepared to spend a lot of time on it.
+.content-box-green[Travis is a great tool to ensure robustness of your package.]
 
-+ Travis has some problems with support for R-devel and R for Windows.
+.content-box-red[But if you have a complex set-up, then be prepared to spend a lot of time on it.]
 
-+ `travis.org` is free for public GitHub repos. `travis.com` is free for private GitHub repos for first 50 triggers. 
+<br>
 
-+ Travis is community maintained, so there is no guarantee that it will always be up-to-date. 
+.content-box-green[`travis.org` is free for public GitHub repos.]
 
-+ E.g. BioC 3.9 was released on 26 April, but Travis seems to only updated the instructions at my request (https://github.com/travis-ci/travis-build/pull/1710) last week. 
+.content-box-red[`travis.com` is free for private GitHub repos for first 50 triggers.]
+
+<br>
+
+.content-box-green[Travis does not support R for Windows.]
+
+.content-box-red[Travis has some problems with support for R-devel.]
+
+.content-box-yellow[Travis is community maintained] E.g. Travis only updated instructions on BioC 3.9 installation at [my request](https://github.com/travis-ci/travis-build/pull/1710) last week. 

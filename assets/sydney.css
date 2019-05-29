@@ -358,7 +358,7 @@ slides > slide {
 .title-slide {
   background-image: url(USydLogo-black.svg);
   /* background-image: url(https://sydney.edu.au/etc/designs/corporate-commons/bower_components/corporate-frontend/dist/assets/img/USydLogo.svg); */
-  background-position: 10% 90%;
+  background-position: 7% 93%;
   background-size: 160px;
   background-color: #e64626;
   text-align:left;
@@ -366,6 +366,18 @@ slides > slide {
   text-shadow: none;
   /*text-shadow: 0 0 5px #333;*/
   /*padding-left: 100px;   delete this for 4:3 aspect ratio */
+}
+
+div.my-footer {
+content: "";
+    position: absolute;
+    bottom: 100px;
+    right: 100px;
+    height: 300px;
+    width: 300px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url("SCC.png");
 }
 
 /* H1 fonts  */
@@ -492,3 +504,9 @@ Accent grey - supportive #F1F1F1
 C=0 M=0 Y=0 K=10
 R=241 G=241 B=241 
 */
+
+
+br {
+   display: block;
+   margin: 5px 0;
+}
