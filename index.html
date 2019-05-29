@@ -4,7 +4,7 @@
     <title>Sydney Coding Club - Building R Package</title>
     <meta charset="utf-8" />
     <meta name="author" content="Kevin Y. X. Wang" />
-    <link href="pkg_talk_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="index_files/remark-css-0.0.1/default.css" rel="stylesheet" />
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
         TeX: { equationNumbers: { autoNumber: "AMS" } },
@@ -35,11 +35,11 @@ class: center, middle, inverse, title-slide
 
 class: segue
 
-### Acknowledgement
+## Acknowledgement
 
-+ Credits go to Garth, Dario and Mark on building good coding practices.
+Credits go to Garth, Dario and Mark for their advice. 
 
-+ I do not believe in coding via talking, you should struggle on your own to find a package building pipeline that suits your own style.
+I do not believe in coding via talking, you have to struggle on your own to find a package building pipeline that suits your own style.
 
 ---
 
@@ -50,14 +50,15 @@ class: segue
 + `tidyverse` packages on GitHub
 + GitHub issues pages
 + Bioconductor style guide
++ ~~Garth~~ 
 
 ---
 
-## Building a package is more than just coding.
+## Building a package is more than just coding
+
++ Writing functions takes 1 hour. Writing a package takes 1 day. Writing a well-designed package takes 1 month. 
 
 + Designs, organisations, dependencies, testing and debugging. 
-
-+ Don’t do a package unless you are sure of the ROI of your time.
 
 + Some packages that I worked on:
   
@@ -66,14 +67,13 @@ class: segue
     - APES: 72 commits, 2 branches
     - scMerge: 152 commits, 4 branches, 2 remotes
 
-+ Almost all of these packages broke in a major way a few times. Either because my poor understanding of GitHub or because someone else's fault. 
-
-+ And it could be quite frustrating when Garth is drinking wine at a nice Armidale bar and I had a bash my keyboard in frustration. 
++ Almost all of these packages broke in a major way a few times. That could be because of you or someone else entirely. 
 
 ---
-## Packages of a different standards
 
-Loosely speaking, a `R` package is a glorified folder with a bunch of scripts*.
+## Packages of different standards
+
+Loosely speaking, a `R` package is simply a folder with a bunch of scripts*.
 
 
   1. A `laptop` package
@@ -102,41 +102,55 @@ Loosely speaking, a `R` package is a glorified folder with a bunch of scripts*.
 ```
 
 ```r
-.libPaths() %&gt;% paste0("/scMerge") %&gt;% list.files()
+.libPaths() %&gt;% paste0("/dplyr") %&gt;% list.files()
 ```
 
 ```
-##  [1] "CITATION"    "data"        "DESCRIPTION" "help"        "html"       
-##  [6] "INDEX"       "libs"        "logo.png"    "Meta"        "NAMESPACE"  
-## [11] "NEWS.md"     "R"
+##  [1] "data"        "DESCRIPTION" "doc"         "help"        "html"       
+##  [6] "include"     "INDEX"       "libs"        "LICENSE"     "Meta"       
+## [11] "NAMESPACE"   "NEWS.md"     "R"
 ```
 
 + `devtools` and `roxygen2` are packages that manage these files and folders for you.
     - `roxygen2`: managing the namespaces and documents
-    - `devtools`: build
+    - `devtools`: building, checking and installing the package
     
 ---
 
 ## Making a CRAN package
 
-+ `devtools::build()` a package is cheap
-+ `devtools::check()` a package is a much higher standard
-+ Everyone must pass this check before being put on CRAN or BioC.
++ `devtools::build()` a package is cheap, `devtools::check()` a package is a much higher standard. 
 
-    - Error: the worst of all. [dum dum dum]
-    - Warning: less severe, but also prevents pass. 
-    - Note: You should check these, but no worries, she’ll be right [Australian accent].
 
-+ Hadley (and thus, I) recommends `devtools::check()` instead of `R CMD Check`
+.pull-left[
++ Everyone must pass this check before being put on CRAN
 
-+ Also consider `devtools::release_check()`.
+.content-box-red[Error: the worst of all.]
 
+.content-box-yellow[Warning: less severe, but also prevents pass.] 
+
+.content-box-green[Note: You should check these, but no worries]
+
+]
+
+
+.pull-right[
+
+&lt;center&gt;
+&lt;img src="figures/ysnp.jpg", width="40%"&gt;
+&lt;/center&gt;
+
+]
+
+
++ Hadley (and thus, I) recommends `devtools::check()` instead of `R CMD Check`.
 ---
 
-Demo: `mcvis` - friday branch
+class: segue
+
+### Demo: `mcvis` - friday branch
 
 ---
-
 ## Making a Bioconductor package
 
 + Bioconductor has a greater focus on documentations, examples and vignettes, reproducibility and coding styles
@@ -148,26 +162,67 @@ Demo: `mcvis` - friday branch
 + Bioconductor has a much higher standard of accepting a package than CRAN
 
 + `BiocCheck::BiocCheck()` checks for
-  - if maintainer is registered with BioC
-  - coding documentations (e.g. `\dontrun{}` is forbidden)
-  - coding style (e.g. recommended function length is less than 50 lines)
-  
---- 
 
-## Bioconductor fun stories
+    * if maintainer is registered with BioC
+    * coding documentations (e.g. `\dontrun{}` is forbidden)
+    * coding style (e.g. recommended function length is less than 50 lines)
+    
 
 ---
 
-## Other useful packages 
+## Bioconductor build report: a virtual machine to check your package
 
+&lt;center&gt;
+&lt;img src="figures/bioc_reoprt.png", width="100%"&gt;
+&lt;/center&gt;
 
---- 
+---
+
+class: segue
+
+## Other useful tools
+
+---
 
 ## `testthat`
 
-+ A "test" folder is set up with a collection of test scripts. So that you can test if the outputs are genuinely matching with your pre-computed results. 
++ A "test" folder is set up with a collection of test scripts. So that you can test if the outputs are genuinely matching with your pre-computed results.
+
+&lt;center&gt;
+&lt;img src="figures/dplyr_test.png", width="80%"&gt;
+&lt;/center&gt;
+
 
 ---
+
+## Travis: continuous integration
+
++ `.travis.yml` controls how a virtual machine should be set up to build and check your package.
+
++ Travis build is triggered by commits.
+
++ Configuring basic Travis is easy:
+
+&lt;center&gt;
+&lt;img src="figures/travis_genDA.png", width="40%"&gt;
+&lt;/center&gt;
+
+
++ But configuring it for more complicate projects with multiple environment variables and flags is a bit harder: https://github.com/tidyverse/dplyr/blob/master/.travis.yml. 
+
+---
+
+## Should you use Travis?
+
+My recommendation: use Travis to ensure robustness on other machines. But just be careful if you have a complex set-up, then be prepared to spend a lot of time on it.
+
++ Travis has some problems with support for R-devel and R for Windows.
+
++ `travis.org` is free for public GitHub repos. `travis.com` is free for private GitHub repos for first 50 triggers. 
+
++ Travis is community maintained, so there is no guarantee that it will always be up-to-date. 
+
++ E.g. BioC 3.9 was released on 26 April, but Travis seems to only updated the instructions at my request (https://github.com/travis-ci/travis-build/pull/1710) last week.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
