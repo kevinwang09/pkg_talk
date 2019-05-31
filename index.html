@@ -41,51 +41,10 @@ I do not believe in coding via talking, you have to struggle on your own to find
 
 ---
 
-## Some resources
+# Demystifying R package
 
-+ Read http://r-pkgs.had.co.nz/
-+ StackExchange
-+ `tidyverse` packages on GitHub
-+ GitHub issues pages
-+ Bioconductor style guide 
-+ [Using Travis for R](https://blog.rstudio.com/2016/03/09/r-on-travis-ci/)
-+ [Building `blogdown` using `Travis`](https://bookdown.org/yihui/blogdown/travis-github.html) (A massive overkill, but okay...)
-+ ~~Garth~~ 
+Loosely speaking, a `R` package is simply a folder with scripts*.
 
-
-
----
-
-## Building a package is more than just coding
-
-+ Designs, organisations, dependencies, testing, documentations and debugging. 
-
-+ Getting a package to install only takes 1 commit. But polishing the package takes much longer:
-  
-    - `SmokyScotch`: 55 commits, 1 branch
-    - `mcvis`: 47 commits, 2 branches
-    - `APES`: 72 commits, 2 branches
-    - `scMerge`: 152 commits, 4 branches
-
----
-
-## Packages of different standards
-
-Loosely speaking, a `R` package is simply a folder with a bunch of scripts*.
-
-
-  1. A `laptop` package
-    - Write your code using `roxygen2`.
-  1. A `GitHub` package
-    - Make a GitHub repository and push.
-  1. A CRAN package
-    - `devtools::check()`
-  1. A Bioconductor package
-    - `BiocCheck::BiocCheck()`
-
----
-
-## Manage your package files `devtools` and `roxygen2`
 
 On my laptop:
 
@@ -108,37 +67,78 @@ On my laptop:
 ## [11] "NAMESPACE"   "NEWS.md"     "R"
 ```
 
-+ `roxygen2`: managing the folders, namespaces and documentations.
-+ `devtools`: building, checking and installing the package.
+---
+class: segue-yellow
+
+# Demo 
+
+https://github.com/kevinwang09/hello
+
+### `roxygen2`: managing the folders, namespaces and documentations
+
+### `devtools`: building, checking and installing the package
+
+
+
+---
+
+## Building a package is more than just coding
+
++ Designs, organisations, dependencies, testing, documentations and debugging. 
+
++ Getting a package to install only takes 1 commit. But polishing the package takes much longer:
+  
+    - `SmokyScotch`: 55 commits, 1 branch
+    - `mcvis`: 47 commits, 2 branches
+    - `APES`: 72 commits, 2 branches
+    - `scMerge`: 152 commits, 4 branches
+
+---
+
+## Packages of different standards
+
+  1. A `laptop` package
+    - Write your code using `roxygen2`.
+  1. A `GitHub` package
+    - Make a GitHub repository and push.
+  1. A CRAN package
+    - `devtools::check()`
+  1. A Bioconductor package
+    - `BiocCheck::BiocCheck()`
+
+---
+class: segue-yellow
+
+# Demo 
+
+https://github.com/kevinwang09/hello
+
+### `devtools::build()` is easy 
+### `devtools::check()` is much harder
 ---
 
 ## Making a CRAN package
 
-+ `devtools::build()` easy, `devtools::check()` is much harder. 
 + Everyone must pass this check before being put on CRAN
 
-.pull-left[
+
 .content-box-red[Error: the worst of all.]
 
 .content-box-yellow[Warning: less severe, but also prevents pass.] 
 
 .content-box-green[Note: You should check these.]
-]
-
-
-.pull-right[
 
 &lt;center&gt;
-&lt;img src="figures/ysnp.jpg", width="40%"&gt;
+&lt;img src="figures/ysnp.jpg", width="20%"&gt;
 &lt;/center&gt;
 
-]
 ---
-
-class: segue
+class: segue-yellow
 
 ### Demo: `mcvis` - friday branch
 
+---
+background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
 ---
 ## Making a Bioconductor package
 
@@ -212,7 +212,22 @@ class: segue
 
 .content-box-red[Travis has some problems with support for R-devel.]
 
-.content-box-yellow[Travis is community maintained] E.g. Travis only updated instructions on BioC 3.9 installation at [my request](https://github.com/travis-ci/travis-build/pull/1710) last week.
+.content-box-yellow[Travis is community maintained] E.g. Travis only updated instructions on BioC 3.9 installation at [my request](https://github.com/travis-ci/travis-build/pull/1710) last week. 
+
+---
+
+
+## Some resources
+
++ Read http://r-pkgs.had.co.nz/
++ StackExchange
++ `tidyverse` packages on GitHub
++ GitHub issues pages
++ Bioconductor style guide 
++ ~~Garth~~ 
++ [Using Travis for R](https://blog.rstudio.com/2016/03/09/r-on-travis-ci/)
++ Praying for divine intervention
++ [Building `blogdown` using `Travis`](https://bookdown.org/yihui/blogdown/travis-github.html) (A massive overkill, but okay...)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

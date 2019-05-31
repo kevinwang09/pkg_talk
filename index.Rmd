@@ -5,6 +5,7 @@ author: "[Kevin Wang](https://twitter.com/KevinWang009)"
 date: "2019 May 29"
 output:
   xaringan::moon_reader:
+    yolo: true
     css: ["default", "assets/sydney-fonts.css", "assets/sydney.css"]
     self_contained: false # if true, fonts will be stored locally
     seal: true # show a title slide with YAML information
@@ -34,16 +35,28 @@ I do not believe in coding via talking, you have to struggle on your own to find
 
 ---
 
-## Some resources
+# Demystifying R package
 
-+ Read http://r-pkgs.had.co.nz/
-+ StackExchange
-+ `tidyverse` packages on GitHub
-+ GitHub issues pages
-+ Bioconductor style guide 
-+ [Using Travis for R](https://blog.rstudio.com/2016/03/09/r-on-travis-ci/)
-+ [Building `blogdown` using `Travis`](https://bookdown.org/yihui/blogdown/travis-github.html) (A massive overkill, but okay...)
-+ ~~Garth~~ 
+Loosely speaking, a `R` package is simply a folder with scripts*.
+
+
+On my laptop:
+
+```{r}
+.libPaths() %>% list.files() %>% head()
+.libPaths() %>% paste0("/dplyr") %>% list.files()
+```
+
+---
+class: segue-yellow
+
+# Demo 
+
+https://github.com/kevinwang09/hello
+
+### `roxygen2`: managing the folders, namespaces and documentations
+
+### `devtools`: building, checking and installing the package
 
 
 
@@ -64,9 +77,6 @@ I do not believe in coding via talking, you have to struggle on your own to find
 
 ## Packages of different standards
 
-Loosely speaking, a `R` package is simply a folder with a bunch of scripts*.
-
-
   1. A `laptop` package
     - Write your code using `roxygen2`.
   1. A `GitHub` package
@@ -77,44 +87,33 @@ Loosely speaking, a `R` package is simply a folder with a bunch of scripts*.
     - `BiocCheck::BiocCheck()`
 
 ---
+class: segue-yellow
 
-## Manage your package files `devtools` and `roxygen2`
+# Demo 
 
-On my laptop:
+https://github.com/kevinwang09/hello
 
-```{r}
-.libPaths() %>% list.files() %>% head()
-.libPaths() %>% paste0("/dplyr") %>% list.files()
-```
-
-+ `roxygen2`: managing the folders, namespaces and documentations.
-+ `devtools`: building, checking and installing the package.
+### `devtools::build()` is easy 
+### `devtools::check()` is much harder
 ---
 
 ## Making a CRAN package
 
-+ `devtools::build()` easy, `devtools::check()` is much harder. 
 + Everyone must pass this check before being put on CRAN
 
-.pull-left[
+
 .content-box-red[Error: the worst of all.]
 
 .content-box-yellow[Warning: less severe, but also prevents pass.] 
 
 .content-box-green[Note: You should check these.]
-]
-
-
-.pull-right[
 
 <center>
-<img src="figures/ysnp.jpg", width="40%">
+<img src="figures/ysnp.jpg", width="20%">
 </center>
 
-]
 ---
-
-class: segue
+class: segue-yellow
 
 ### Demo: `mcvis` - friday branch
 
@@ -192,3 +191,18 @@ class: segue
 .content-box-red[Travis has some problems with support for R-devel.]
 
 .content-box-yellow[Travis is community maintained] E.g. Travis only updated instructions on BioC 3.9 installation at [my request](https://github.com/travis-ci/travis-build/pull/1710) last week. 
+
+---
+
+
+## Some resources
+
++ Read http://r-pkgs.had.co.nz/
++ StackExchange
++ `tidyverse` packages on GitHub
++ GitHub issues pages
++ Bioconductor style guide 
++ ~~Garth~~ 
++ [Using Travis for R](https://blog.rstudio.com/2016/03/09/r-on-travis-ci/)
++ Praying for divine intervention
++ [Building `blogdown` using `Travis`](https://bookdown.org/yihui/blogdown/travis-github.html) (A massive overkill, but okay...)
